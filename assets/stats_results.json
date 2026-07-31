@@ -1,0 +1,15 @@
+{
+  "correlation_budget_revenue": 0.7598,
+  "ttest_popularity": {
+    "t_stat": 2.0617,
+    "p_value": 0.039682
+  },
+  "chi2_genre_success": {
+    "chi2": 1.7731,
+    "dof": 9,
+    "p_value": 0.994569
+  },
+  "success_rate": 0.807,
+  "n_rows_after_cleaning": 2000,
+  "n_rows_dropped": 0
+}

@@ -1,0 +1,27 @@
+{
+  "accuracy": 0.6275,
+  "precision": 0.8175,
+  "recall": 0.6935,
+  "confusion_matrix": [
+    [
+      27,
+      50
+    ],
+    [
+      99,
+      224
+    ]
+  ],
+  "top_features": {
+    "popularity": 0.2472,
+    "budget": 0.232,
+    "vote_average": 0.2151,
+    "runtime": 0.2052,
+    "primary_genre_Drama": 0.0133,
+    "primary_genre_Action": 0.013,
+    "primary_genre_Adventure": 0.0122,
+    "primary_genre_Horror": 0.0112
+  },
+  "train_rows": 1600,
+  "test_rows": 400
+}
