@@ -134,11 +134,12 @@ with tab_overview:
         color_discrete_map={"Fail": "#e74c3c", "Success": "#2ecc71"},
         hover_data=["title", "primary_genre", "vote_average"],
         labels={"budget": "Budget ($)", "revenue": "Revenue ($)", "color": "Outcome"},
+        render_mode="svg",
     )
     max_val = max(filtered["budget"].max(), filtered["revenue"].max()) if len(filtered) else 1
     fig.add_shape(type="line", x0=0, y0=0, x1=max_val, y1=max_val,
                   line=dict(dash="dash", color="gray"))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
     st.caption(
         f"Correlation between budget and revenue across the full dataset: "
         f"**{stats_results['correlation_budget_revenue']}** — bigger budgets trend toward "
@@ -155,7 +156,7 @@ with tab_eda:
         st.plotly_chart(
             px.bar(genre_counts, orientation="h", labels={"value": "Movies", "index": "Genre"},
                    color_discrete_sequence=["#3498db"]).update_yaxes(autorange="reversed"),
-            use_container_width=True,
+            width="stretch",
         )
 
     with colB:
@@ -164,7 +165,7 @@ with tab_eda:
         st.plotly_chart(
             px.bar(genre_success, orientation="h", labels={"value": "Success rate", "index": "Genre"},
                    color_discrete_sequence=["#2ecc71"]).update_yaxes(autorange="reversed"),
-            use_container_width=True,
+            width="stretch",
         )
 
     st.subheader("Popularity, runtime & vote average vs. success")
@@ -175,7 +176,7 @@ with tab_eda:
         color_discrete_map={"Fail": "#e74c3c", "Success": "#2ecc71"},
         labels={"x": "Outcome"},
     )
-    st.plotly_chart(fig_box, use_container_width=True)
+    st.plotly_chart(fig_box, width="stretch")
 
     st.subheader("Correlation heatmap (numeric features)")
     st.image("assets/correlation_heatmap.png", use_container_width=False, width=560)
@@ -226,9 +227,9 @@ with tab_model:
 
     colX, colY = st.columns(2)
     with colX:
-        st.image("assets/confusion_matrix.png", use_container_width=True)
+        st.image("assets/confusion_matrix.png", width="stretch")
     with colY:
-        st.image("assets/feature_importance.png", use_container_width=True)
+        st.image("assets/feature_importance.png", width="stretch")
 
     st.divider()
     st.subheader("🎯 Try it: predict a movie's success")
@@ -276,7 +277,7 @@ with tab_model:
             },
         ))
         fig_gauge.update_layout(height=280, margin=dict(l=20, r=20, t=50, b=10))
-        st.plotly_chart(fig_gauge, use_container_width=True)
+        st.plotly_chart(fig_gauge, width="stretch")
         st.caption(
             "Prediction is based only on budget, popularity, runtime, rating, and genre — "
             "revenue is intentionally never used as an input, since it defines the label itself."
@@ -288,7 +289,7 @@ with tab_data:
     st.dataframe(
         filtered[["title", "primary_genre", "budget", "revenue", "popularity", "runtime", "vote_average", "success"]]
         .sort_values("revenue", ascending=False),
-        use_container_width=True,
+        width="stretch",
         height=520,
     )
 
