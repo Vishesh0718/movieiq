@@ -24,6 +24,14 @@ from sklearn.metrics import (
 )
 from sklearn.model_selection import train_test_split
 
+GOLD, CRIMSON, TEAL, VIOLET = "#F2C744", "#E4432B", "#2EC4B6", "#8B5CF6"
+INK, TEXT, MUTED = "#0B0B14", "#F5F3EE", "#A8A5B8"
+plt.rcParams.update({
+    "figure.facecolor": INK, "axes.facecolor": INK, "savefig.facecolor": INK,
+    "axes.edgecolor": MUTED, "axes.labelcolor": TEXT, "text.color": TEXT,
+    "xtick.color": MUTED, "ytick.color": MUTED, "axes.titlecolor": GOLD,
+})
+
 df = pd.read_csv("movies_clean.csv")
 
 # 4.1 Feature selection.
@@ -66,7 +74,7 @@ print(f"[Stage 4.4] Accuracy={acc:.3f}  Precision={prec:.3f}  Recall={rec:.3f}")
 print("Confusion matrix:\n", cm)
 
 plt.figure(figsize=(5, 4.5))
-sns.heatmap(cm, annot=True, fmt="d", cmap="Blues",
+sns.heatmap(cm, annot=True, fmt="d", cmap="rocket_r",
             xticklabels=["Fail", "Success"], yticklabels=["Fail", "Success"])
 plt.xlabel("Predicted")
 plt.ylabel("Actual")
@@ -78,7 +86,7 @@ plt.close()
 # 4.5 Feature importance
 importances = pd.Series(model.feature_importances_, index=feature_columns).sort_values(ascending=False)
 plt.figure(figsize=(7, 5))
-importances.head(12).plot(kind="barh", color="#9b59b6")
+importances.head(12).plot(kind="barh", color=VIOLET)
 plt.gca().invert_yaxis()
 plt.title("Feature Importance - Random Forest")
 plt.xlabel("Importance")

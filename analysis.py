@@ -15,7 +15,16 @@ import pandas as pd
 import seaborn as sns
 from scipy import stats
 
-sns.set_theme(style="whitegrid")
+GOLD, CRIMSON, TEAL, VIOLET = "#F2C744", "#E4432B", "#2EC4B6", "#8B5CF6"
+INK, PANEL, TEXT, MUTED = "#0B0B14", "#16161F", "#F5F3EE", "#A8A5B8"
+
+plt.rcParams.update({
+    "figure.facecolor": INK, "axes.facecolor": INK, "savefig.facecolor": INK,
+    "axes.edgecolor": MUTED, "axes.labelcolor": TEXT, "text.color": TEXT,
+    "xtick.color": MUTED, "ytick.color": MUTED, "grid.color": "#2A2A38",
+    "axes.titlecolor": GOLD, "legend.facecolor": PANEL, "legend.edgecolor": MUTED,
+})
+sns.set_theme(style="darkgrid", rc=plt.rcParams)
 ASSETS = "assets"
 
 # ---------------------------------------------------------------------------
@@ -61,7 +70,7 @@ print("[Stage 1.4] Saved movies_clean.csv with genre_list / primary_genre column
 plt.figure(figsize=(7, 5))
 sns.scatterplot(
     data=df, x="budget", y="revenue", hue="success",
-    palette={0: "#e74c3c", 1: "#2ecc71"}, alpha=0.6,
+    palette={0: CRIMSON, 1: "#4CD4A0"}, alpha=0.6,
 )
 lims = [0, max(df["budget"].max(), df["revenue"].max())]
 plt.plot(lims, lims, "--", color="gray", linewidth=1, label="break-even line")
@@ -82,12 +91,12 @@ genre_counts = genre_exploded["genre_list"].value_counts()
 genre_success = genre_exploded.groupby("genre_list")["success"].mean().sort_values(ascending=False)
 
 fig, axes = plt.subplots(1, 2, figsize=(13, 5))
-genre_counts.head(10).plot(kind="barh", ax=axes[0], color="#3498db")
+genre_counts.head(10).plot(kind="barh", ax=axes[0], color=TEAL)
 axes[0].invert_yaxis()
 axes[0].set_title("Most Common Genres")
 axes[0].set_xlabel("Number of Movies")
 
-genre_success.head(10).plot(kind="barh", ax=axes[1], color="#2ecc71")
+genre_success.head(10).plot(kind="barh", ax=axes[1], color=GOLD)
 axes[1].invert_yaxis()
 axes[1].set_title("Highest Success Rate by Genre")
 axes[1].set_xlabel("Success Rate")
@@ -99,7 +108,7 @@ plt.close()
 fig, axes = plt.subplots(1, 3, figsize=(14, 4.5))
 for ax, col in zip(axes, ["popularity", "runtime", "vote_average"]):
     sns.boxplot(data=df, x="success", y=col, hue="success", ax=ax,
-                palette={0: "#e74c3c", 1: "#2ecc71"}, legend=False)
+                palette={0: CRIMSON, 1: "#4CD4A0"}, legend=False)
     ax.set_xticklabels(["Fail", "Success"])
     ax.set_title(col)
 plt.tight_layout()
@@ -113,7 +122,7 @@ print("[Stage 2.3] means by success class:\n", means_by_success)
 plt.figure(figsize=(6.5, 5.5))
 num_cols = ["budget", "revenue", "popularity", "runtime", "vote_average", "success"]
 corr = df[num_cols].corr()
-sns.heatmap(corr, annot=True, fmt=".2f", cmap="coolwarm", center=0)
+sns.heatmap(corr, annot=True, fmt=".2f", cmap="rocket_r", center=0)
 plt.title("Correlation Heatmap")
 plt.tight_layout()
 plt.savefig(f"{ASSETS}/correlation_heatmap.png", dpi=140)
